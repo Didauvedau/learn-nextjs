@@ -1,9 +1,35 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
+	const [time, setTime] = useState(0)
+
+	const [show, setShow] = useState(false)
+
+	const router = useRouter()
+
+	const gotoDetail = () => {
+		router.push({
+			pathname: '/posts/[postsID]',
+			query: {
+				postsID: 123,
+				ref: 'social',
+			},
+		})
+	}
+
+	useEffect(() => {
+		if (time > 5) {
+			setShow(true)
+		}
+	}, [time, show])
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -13,38 +39,22 @@ const Home: NextPage = () => {
 			</Head>
 
 			<main className={styles.main}>
-				<h1 className={styles.title}>
-					Welcome to <a href="https://nextjs.org">My New Home</a>
-				</h1>
+				<h2>{time}</h2>
 
-				<p className={styles.description}>
-					Get started by editing <code className={styles.code}>pages/index.tsx</code>
-				</p>
+				<button className="btn btn-primary" onClick={() => setTime(time + 1)}>
+					increase
+				</button>
+				{!show || (
+					<Link href="/posts/create">
+						<a className="m-3">
+							<button className="btn btn-info">Create Page</button>
+						</a>
+					</Link>
+				)}
 
-				<div className={styles.grid}>
-					<a href="https://nextjs.org/docs" className={styles.card}>
-						<h2>Documentation &rarr;</h2>
-						<p>Find in-depth information about Next.js features and API.</p>
-					</a>
-
-					<a href="https://nextjs.org/learn" className={styles.card}>
-						<h2>Learn &rarr;</h2>
-						<p>Learn about Next.js in an interactive course with quizzes!</p>
-					</a>
-
-					<a href="https://github.com/vercel/next.js/tree/canary/examples" className={styles.card}>
-						<h2>Examples &rarr;</h2>
-						<p>Discover and deploy boilerplate example Next.js projects.</p>
-					</a>
-
-					<a
-						href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-						className={styles.card}
-					>
-						<h2>Deploy &rarr;</h2>
-						<p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-					</a>
-				</div>
+				<button onClick={gotoDetail} className="m-3 btn btn-success">
+					goto
+				</button>
 			</main>
 
 			<footer className={styles.footer}>
