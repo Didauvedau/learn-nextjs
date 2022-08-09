@@ -53,7 +53,7 @@ const Home: NextPage = () => {
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					Powered by{' '}
+					Powered by &#10017;{' Mr.Hung '} &#10017; And
 					<span className={styles.logo}>
 						<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
 					</span>
